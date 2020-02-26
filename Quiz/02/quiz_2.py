@@ -17,10 +17,15 @@ def generate_permutation(for_seed, length):
 def maps_to(values, x):
     # pass
     # REPLACE PASS ABOVE WITH YOUR CODE
+    #
+    # values.index(x)
+    # values.find(x)
+
     for index in range(len(values)):
         if values[index] == x:
             return index + 1
     return -1
+
 
 
 def length_of_cycle_containing(values, x):
