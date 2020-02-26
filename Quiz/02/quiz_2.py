@@ -40,6 +40,8 @@ def length_of_cycle_containing(values, x):
 def analyse(values):
     # pass
     # REPLACE PASS ABOVE WITH YOUR CODE
+    # 没考虑性能，请注意！！！
+    # 如果不调用上上面的方法的话，是可以优化性能的
     result = [length_of_cycle_containing(values, x) for x in values]
     result.insert(0, 0)
     return result
