@@ -20,23 +20,30 @@ def maps_to(values, x):
     #
     # values.index(x)
     # values.find(x)
+    return values.index(x)
 
-    for index in range(len(values)):
-        if values[index] == x:
-            return index + 1
-    return -1
-
-
+    # 6
 
 def length_of_cycle_containing(values, x):
     # pass
     # REPLACE PASS ABOVE WITH YOUR CODE
     cycle_values = [x]
-    x = maps_to(values, x)
+
+    # x = maps_to(values, x)
+    x = values.index(x)
+
     while x not in cycle_values:
         cycle_values.append(x)
-        x = maps_to(values, x)
+        # x = maps_to(values, x)
+        x = values.index(x)
+
     return len(cycle_values)
+
+
+
+
+
+
 
 
 # Returns a list of length len(values) + 1, with 0 at index 0
@@ -47,6 +54,37 @@ def analyse(values):
     # REPLACE PASS ABOVE WITH YOUR CODE
     # 没考虑性能，请注意！！！
     # 如果不调用上上面的方法的话，是可以优化性能的
-    result = [length_of_cycle_containing(values, x) for x in values]
-    result.insert(0, 0)
-    return result
+    # result = [length_of_cycle_containing(values, x) for x in values]
+    # result.insert(0, 0)
+    # return result
+
+    map_values = {value: index for index, value in enumerate(values, start=1)}
+
+    while map_values:
+        value, index = map_values.popitem()
+
+        cycle_values = set()
+        cycle_values.add(value)
+        cycle_values.add(index)
+
+        while index in map_values:
+            index = map_values.pop(index)
+            cycle_values.add(index)
+
+        length = len(cycle_values)
+        for item in cycle_values:
+            values[item - 1] = length
+
+    return values
+
+
+if __name__ == "__main__":
+    values = generate_permutation(1, 10_000_000)
+    cycle_lengths = analyse(values)
+    print(len(cycle_lengths))
+    print(cycle_lengths[500])
+    # values = generate_permutation(2, 1000)
+    # cycle_lengths = analyse(values)
+    # print(cycle_lengths)
+    # print(len(cycle_lengths))
+    # print(cycle_lengths[500])
